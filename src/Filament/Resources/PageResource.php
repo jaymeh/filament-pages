@@ -2,7 +2,7 @@
 
 namespace Jaymeh\FilamentPages\Filament\Resources;
 
-use Filament\Forms\Components\{ Checkbox, Grid, Section, TextArea, TextInput, Toggle };
+use Filament\Forms\Components\{ Checkbox, Grid, Section, Textarea, TextInput, Toggle };
 use Filament\Forms\{ Form, Get, Set };
 use Filament\Resources\Resource;
 use Filament\Tables;
