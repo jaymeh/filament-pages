@@ -2,26 +2,16 @@
 
 namespace Jaymeh\FilamentPages\Filament\Resources;
 
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
+use Filament\Forms\Components\{ Checkbox, Grid, Section, Textarea, TextInput, Toggle };
+use Filament\Forms\{ Form, Get, Set };
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\{ IconColumn, TextColumn };
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Jaymeh\FilamentDynamicBuilder\Forms\Components\PageBuilder;
-use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\CreatePage;
-use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\EditPage;
-use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\ListPages;
+use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\{ CreatePage, EditPage, ListPages };
 
 class PageResource extends Resource
 {
@@ -60,9 +50,9 @@ class PageResource extends Resource
                                     ->rules([])
                                     ->required(),
                                 PageBuilder::make('content')
-                                    ->required()
                                     ->label('Content')
                                     ->collapsible()
+                                    ->required()
                                     ->rules(['required'])
                                     ->columnSpanFull()
                                     ->blockNumbers(false),
