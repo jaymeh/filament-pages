@@ -7,14 +7,9 @@ use Filament\Forms\Components\Component;
 use Filament\Resources\Pages\EditRecord;
 use Jaymeh\FilamentDynamicBuilder\Forms\Components\PageBuilder;
 use Jaymeh\FilamentPages\Filament\Resources\PageResource;
-use Pboivin\FilamentPeek\Pages\Concerns\HasBuilderPreview;
-use Pboivin\FilamentPeek\Pages\Concerns\HasPreviewModal;
 
 class EditPage extends EditRecord
 {
-    use HasBuilderPreview;
-    use HasPreviewModal;
-
     protected static string $resource = PageResource::class;
 
     protected function getHeaderActions(): array
