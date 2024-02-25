@@ -9,7 +9,7 @@ class PageFactory extends Factory
     /**
      * The name of the factory's corresponding model.
      */
-    protected $model = \Modules\Pages\app\Models\Page::class;
+    protected $model = \Jaymeh\FilamentPages\Models\Page::class;
 
     /**
      * Define the model's default state.

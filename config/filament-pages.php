@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'pages_model' => \Modules\Pages\app\Models\Page::class,
+    'pages_model' => \Jaymeh\FilamentPages\Models\Page::class,
 
     /*
     |--------------------------------------------------------------------------
