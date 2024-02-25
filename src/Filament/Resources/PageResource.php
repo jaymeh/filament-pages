@@ -59,6 +59,7 @@ class PageResource extends Resource
                                 ->rules([])
                                 ->required(),
                             PageBuilder::make('content')
+                                ->required()
                                 ->label('Content')
                                 ->collapsible()
                                 ->rules(['required'])
