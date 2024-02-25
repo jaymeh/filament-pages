@@ -126,13 +126,15 @@ class PageResource extends Resource
                         return $record->isPublished() ? 'heroicon-s-check-circle' : 'heroicon-s-x-circle';
                     })
                     ->color(fn ($record) => $record->isPublished() ? 'success' : 'danger')
-                    ->alignCenter(),
+                    ->alignCenter()
+                    ->sortable(),
                 IconColumn::make('is_homepage')
                     ->boolean()
                     ->icon('heroicon-s-home')
                     ->color(fn ($record) => $record->is_homepage ? 'success' : 'danger')
                     ->alignCenter(),
-                TextColumn::make('title'),
+                TextColumn::make('title')
+                    ->sortable(),
                 TextColumn::make('permalink'),
             ])
             ->filters([
