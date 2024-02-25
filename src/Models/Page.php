@@ -26,11 +26,7 @@ class Page extends Model
         'title',
         'description',
         'content',
-    ];
-
-    public $translatable = [
-        'title',
-        'description',
+        'published_at',
     ];
 
     protected $casts = [

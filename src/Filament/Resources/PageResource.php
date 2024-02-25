@@ -2,22 +2,27 @@
 
 namespace Jaymeh\FilamentPages\Filament\Resources;
 
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
+use Filament\Tables;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Resources\Resource;
-use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
+use Filament\Resources\Resource;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Textarea;
+use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Jaymeh\FilamentDynamicBuilder\Forms\Components\PageBuilder;
-use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\CreatePage;
 use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\EditPage;
 use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\ListPages;
+use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\CreatePage;
 
 class PageResource extends Resource
 {
@@ -44,8 +49,8 @@ class PageResource extends Resource
                                 ->required()
                                 ->rules('max:255')
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(function (Get $get, Set $set, $state) {
-                                    if (! $get('permalink')) {
+                                ->afterStateUpdated(function (Get $get, Set $set, $state, ?Model $record) {
+                                    if (! $get('permalink') && !$record->isPublished()) {
                                         $set('permalink', Str::slug($state));
                                     }
                                 }),
@@ -64,13 +69,39 @@ class PageResource extends Resource
                             'xl' => 4,
                             '2xl' => 6,
                         ]),
-                        Section::make('Url Settings')->schema([
+                        Section::make('Page Settings')->schema([
+                            Toggle::make('published_at')
+                                ->onColor('success')
+                                ->offColor('danger')
+                                ->live(onBlur: true)
+                                ->label(function (Get $get) {
+                                    return $get('published_at') ? 'Published' : 'Unpublished';
+                                })
+                                ->dehydrateStateUsing(function (?Model $record, ?string $state) {
+                                    if (!$state) {
+                                        return NULL;
+                                    }
+
+                                    if ($record->isPublished() && $state) {
+                                        return $record->published_at;
+                                    }
+
+                                    return now();
+                                }),
                             Checkbox::make('is_homepage')
-                                ->live(),
+                                ->live()
+                                ->afterStateUpdated(function (Get $get, Set $set, $state) {
+                                    if ($state) {
+                                        $set('permalink', NULL);
+                                    }
+                                }),
                             TextInput::make('permalink')
-                                ->required()
-                                ->rules(['nullable', 'max:255'])
-                                ->disabled(fn (Get $get): bool => $get('is_homepage')),
+                                ->required(fn(Get $get) => $get('is_homepage') === false)
+                                ->rules(['nullable', 'required_if:is_homepage,0', 'max:255'])
+                                ->hidden(fn (Get $get): bool => $get('is_homepage'))
+                                ->helperText(
+                                    'The URL of the page.'
+                                ),
                         ])->columnSpan([
                             'md' => 1,
                             'lg' => 4,
@@ -85,7 +116,22 @@ class PageResource extends Resource
     {
         return $table
             ->columns([
-                //
+                IconColumn::make('published_at')
+                    ->boolean()
+                    ->default(false)
+                    ->label('Published')
+                    ->icon(function ($record, ?string $state) {
+                        return $record->isPublished() ? 'heroicon-s-check-circle' : 'heroicon-s-x-circle';
+                    })
+                    ->color(fn ($record) => $record->isPublished() ? 'success' : 'danger')
+                    ->alignCenter(),
+                IconColumn::make('is_homepage')
+                    ->boolean()
+                    ->icon('heroicon-s-home')
+                    ->color(fn ($record) => $record->is_homepage ? 'success' : 'danger')
+                    ->alignCenter(),
+                TextColumn::make('title'),
+                TextColumn::make('permalink'),
             ])
             ->filters([
                 //
@@ -118,6 +164,6 @@ class PageResource extends Resource
 
     public static function getModel(): string
     {
-        return config('pages.pages_model', static::$model);
+        return config('filament-pages.pages_model', static::$model);
     }
 }
