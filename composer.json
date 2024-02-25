@@ -24,7 +24,8 @@
         "filament/filament": "^3.0",
         "jaymeh/filament-dynamic-builder": "^1.0",
         "spatie/laravel-package-tools": "^1.15.0",
-        "illuminate/contracts": "^10.0"
+        "illuminate/contracts": "^10.0",
+        "creode/laravel-repository": "^1.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
@@ -46,9 +47,6 @@
         }
     },
     "scripts": {
-        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
         "format": "vendor/bin/pint"
     },
     "config": {

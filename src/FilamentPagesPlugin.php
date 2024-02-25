@@ -4,6 +4,7 @@ namespace Jaymeh\FilamentPages;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Jaymeh\FilamentPages\Filament\Resources\PageResource;
 
 class FilamentPagesPlugin implements Plugin
 {
@@ -14,7 +15,10 @@ class FilamentPagesPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        $panel
+            ->resources([
+                PageResource::class,
+            ]);
     }
 
     public function boot(Panel $panel): void
