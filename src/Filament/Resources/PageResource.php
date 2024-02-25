@@ -2,27 +2,26 @@
 
 namespace Jaymeh\FilamentPages\Filament\Resources;
 
-use Filament\Tables;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Forms\Form;
-use Filament\Tables\Table;
-use Illuminate\Support\Str;
 use Filament\Resources\Resource;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Textarea;
-use Illuminate\Database\Eloquent\Model;
-use Filament\Forms\Components\TextInput;
+use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Jaymeh\FilamentDynamicBuilder\Forms\Components\PageBuilder;
+use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\CreatePage;
 use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\EditPage;
 use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\ListPages;
-use Jaymeh\FilamentPages\Filament\Resources\PageResource\Pages\CreatePage;
 
 class PageResource extends Resource
 {
@@ -50,7 +49,7 @@ class PageResource extends Resource
                                 ->rules('max:255')
                                 ->live(onBlur: true)
                                 ->afterStateUpdated(function (Get $get, Set $set, $state, ?Model $record) {
-                                    if (! $get('permalink') && !$record->isPublished()) {
+                                    if (! $get('permalink') && ! $record->isPublished()) {
                                         $set('permalink', Str::slug($state));
                                     }
                                 }),
@@ -78,8 +77,8 @@ class PageResource extends Resource
                                     return $get('published_at') ? 'Published' : 'Unpublished';
                                 })
                                 ->dehydrateStateUsing(function (?Model $record, ?string $state) {
-                                    if (!$state) {
-                                        return NULL;
+                                    if (! $state) {
+                                        return null;
                                     }
 
                                     if ($record->isPublished() && $state) {
@@ -92,11 +91,11 @@ class PageResource extends Resource
                                 ->live()
                                 ->afterStateUpdated(function (Get $get, Set $set, $state) {
                                     if ($state) {
-                                        $set('permalink', NULL);
+                                        $set('permalink', null);
                                     }
                                 }),
                             TextInput::make('permalink')
-                                ->required(fn(Get $get) => $get('is_homepage') === false)
+                                ->required(fn (Get $get) => $get('is_homepage') === false)
                                 ->rules(['nullable', 'required_if:is_homepage,0', 'max:255'])
                                 ->hidden(fn (Get $get): bool => $get('is_homepage'))
                                 ->helperText(
