@@ -9,12 +9,12 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
+use Jaymeh\FilamentPages\Commands\FilamentPagesCommand;
+use Jaymeh\FilamentPages\Testing\TestsFilamentPages;
 use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Jaymeh\FilamentPages\Commands\FilamentPagesCommand;
-use Jaymeh\FilamentPages\Testing\TestsFilamentPages;
 
 class FilamentPagesServiceProvider extends PackageServiceProvider
 {

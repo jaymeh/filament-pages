@@ -15,10 +15,10 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Jaymeh\FilamentPages\FilamentPagesServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use Jaymeh\FilamentPages\FilamentPagesServiceProvider;
 
 class TestCase extends Orchestra
 {
