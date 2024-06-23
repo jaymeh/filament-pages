@@ -10,9 +10,7 @@ use Jaymeh\FilamentPages\Repositories\PageRepository;
 
 class PagesController extends Controller
 {
-    public function __construct(protected BlockRenderer $blockRenderer, protected PageRepository $pageRepository)
-    {
-    }
+    public function __construct(protected BlockRenderer $blockRenderer, protected PageRepository $pageRepository) {}
 
     public function home()
     {

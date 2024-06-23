@@ -52,7 +52,7 @@ class PageResource extends Resource
                                     ->rules('max:255')
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function (Get $get, Set $set, $state, ?Model $record) {
-                                        if (! $get('permalink') && (!$record || ! $record->isPublished())) {
+                                        if (! $get('permalink') && (! $record || ! $record->isPublished())) {
                                             $set('permalink', Str::slug($state));
                                         }
                                     }),
@@ -125,9 +125,10 @@ class PageResource extends Resource
                     ->default(false)
                     ->label('Published')
                     ->icon(function ($record, ?string $state) {
-                        if (!$record) {
+                        if (! $record) {
                             return 'heroicon-s-x-circle';
                         }
+
                         return $record->isPublished() ? 'heroicon-s-check-circle' : 'heroicon-s-x-circle';
                     })
                     ->color(fn ($record) => $record->isPublished() ? 'success' : 'danger')
