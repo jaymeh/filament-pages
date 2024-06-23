@@ -27,7 +27,7 @@ class PageResource extends Resource
 {
     protected static ?string $model = \Jaymeh\FilamentPages\Models\Page::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $modelLabel = 'Page';
 
