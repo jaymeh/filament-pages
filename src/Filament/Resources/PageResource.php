@@ -86,11 +86,11 @@ class PageResource extends Resource
                                             return null;
                                         }
 
-                                        if ($record->isPublished() && $state) {
-                                            return $record->published_at;
+                                        if (!$record || !$record->isPublished()) {
+                                            return now();
                                         }
 
-                                        return now();
+                                        return $record->published_at;
                                     }),
                                 Checkbox::make('is_homepage')
                                     ->live()
@@ -131,7 +131,7 @@ class PageResource extends Resource
 
                         return $record->isPublished() ? 'heroicon-s-check-circle' : 'heroicon-s-x-circle';
                     })
-                    ->color(fn ($record) => $record->isPublished() ? 'success' : 'danger')
+                    ->color(fn ($record) => $record && $record->isPublished() ? 'success' : 'danger')
                     ->alignCenter()
                     ->sortable(),
                 IconColumn::make('is_homepage')
