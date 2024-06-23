@@ -25,7 +25,8 @@
         "jaymeh/filament-dynamic-builder": "^1.0",
         "spatie/laravel-package-tools": "^1.15.0",
         "illuminate/contracts": "^10.0 | ^11.0",
-        "creode/laravel-repository": "^1.0"
+        "creode/laravel-repository": "^1.0",
+        "pawelmysior/laravel-publishable": "^3.0 | ^4.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
