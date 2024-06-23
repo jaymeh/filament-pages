@@ -86,7 +86,7 @@ class PageResource extends Resource
                                             return null;
                                         }
 
-                                        if (!$record || !$record->isPublished()) {
+                                        if (! $record || ! $record->isPublished()) {
                                             return now();
                                         }
 
